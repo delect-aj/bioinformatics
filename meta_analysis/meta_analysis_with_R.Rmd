@@ -25,7 +25,7 @@ Variable names in R datasets for meta-analysis of continuous responses
 ```{r figname, echo=FALSE, fig.cap="variable name", out.width = '100%'}
 knitr::include_graphics("image/variable_name.jpg")
 ```
-#### 1.1.1 **Mean Difference**
+#### **1.1.1 Mean Difference**
 THe estimated mean difference $\hat \mu_k = \hat \mu_{ek} - \hat \mu_{ck}$  
 variance estimate : $Var(\hat \mu_k) = \frac {s_{ek}^2}{n_{ek}} + \frac {s_{ck}^2}{n_ck}$
 An approximate two-sided (1 - $\alpha$) confidence interval for the mean difference  
@@ -51,5 +51,32 @@ with(data1[1, ],
 zscore <- MD/seMD
 round(c(zscore, 2*pnorm(abs(zscore), lower.tail=FALSE)), 4)
 ```
+#### **1.1.2 Standardised Mean Difference**
+In many settings differences in the individual studies
+SDM : $\hat g_K = (1 - \frac {3}{4n_k - 9}) \frac {\hat \mu_{ek} - \hat \mu_{ck}}{\sqrt ((n_{ek} - 1)s_{ek}^2 + (n_{ck} -1)s_{ck}^2)/(n_{k} - 2)}$  
+variance : $Var(\hat g_k) = \frac {n_k}{n_{ek}\times{n_{ck}}} + \frac {\hat g_k^2}{2(n_k - 3.94)}$  
+confidence interval : $\hat g_k \pm Z_{1 - \frac {\alpha}{2}} \sqrt Var(\hat g_k)$
 
+```{r}
+# 1. Read in the data:
+data2 <- read.csv("data/dataset02.csv")
+# 2. As usual, to view an object, type its name:
+data2
+# 3. Calculate total sample sizes
+summary(data2$Ne+data2$Nc)
+# 1. Calculate standardised mean difference (SMD) and
+#    its standard error (seSMD) for study 1 (Blashki) of
+#    dataset data2:
+N <- with(data2[1,], Ne + Nc)
+SMD <- with(data2[1,],
+            (1 - 3/(4 * N - 9)) * (Me - Mc) /
+            sqrt(((Ne - 1) * Se^2 + (Nc - 1) * Sc^2)/(N - 2)))
+seSMD <- with(data2[1,],
+              sqrt(N/(Ne * Nc) + SMD^2/(2 * (N - 3.94))))
+# 2. Print standardised mean difference and limits of 95% CI
+#    interval using round function to show only two digits:
+round(c(SMD, SMD + c(-1,1) * qnorm(1-(0.05/2)) * seSMD), 2)
+print(metacont(Ne, Me, Se, Nc, Mc, Sc, sm="SMD",
+               data=data2, subset=1), digits=2)
+```
 
