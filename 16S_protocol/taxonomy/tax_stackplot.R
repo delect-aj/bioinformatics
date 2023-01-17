@@ -1,0 +1,224 @@
+# 样本或组的物种组成堆叠柱状图 Stackplot of taxonomy for samples and groups
+#
+# This is the function named 'tax_stackplot'
+# which draw stack plot, and return a ggplot2 object
+#
+#' @title Plotting stackplot of taxonomy for groups or samples
+#' @description Input taxonomy composition, and metadata (SampleID and groupID). Then select top N high abundance taxonomy and group other low abundance. When Select samples can draw sample composition by facet groups. If used group can show mean of each group. Finally, return a ggplot2 object.
+#' @param tax_sum composition matrix, like OTU table and rowname is taxonomy, typical output of usearch -sintax_summary;
+#' @param metadata matrix or dataframe, including sampleID and groupID;
+#' @param topN Top N taxonomy to show, default 8, alternative 4, 6, 10 ...;
+#' @param groupID column name for groupID;
+#' @param style group or sample, default group
+#' @param sorted Legend sorted type, default abundance, alternative alphabet
+#' @param subgroup Group samples with supplied subgroup to compute avrage values.
+#' @details
+#' By default, returns top 8 taxonomy and group mean stackplot
+#' The available style include the following:
+#' \itemize{
+#' \item{group: group mean stackplot}
+#' \item{sample: each sample stackplot and facet by group}
+#' }
+#' @return ggplot2 object.
+#' @author Contact: Yong-Xin Liu \email{metagenome@@126.com}
+#' @references
+#'
+#' Yong-Xin Liu, Yuan Qin, Tong Chen, Meiping Lu, Xubo Qian, Xiaoxuan Guo & Yang Bai.
+#' A practical guide to amplicon and metagenomic analysis of microbiome data.
+#' Protein Cell, 2020(41), 1-16, DOI: \url{https://doi.org/10.1007/s13238-020-00724-8}
+#'
+#' @seealso tax_stackplot
+#' @examples
+#' # Taxonomy table in phylum level, rownames is Phylum, colnames is SampleID
+#' data(tax_phylum)
+#' # metadata, include SampleID, Group and Site
+#' data(metadata)
+#' # tax_sum and metadata as input, default include top 8 taxonomy, groupID is Group, show group mean and sorted by abundance
+#' tax_stackplot(tax_sum = tax_phylum, metadata)
+#' # Set top10 taxonomy, group by "Site", group mean, and sort by abundance
+#' tax_stackplot(tax_sum = tax_phylum, metadata, topN = 10, groupID = "Site", style = "group", sorted = "abundance")
+#' # Set top 10 taxonomy, group by "Group", and sample composition sorted by alphabet
+#' tax_stackplot(tax_sum = tax_phylum, metadata, topN = 10, groupID = "Group", style = "sample", sorted = "alphabet")
+#' @export
+tax_stackplot <-
+  function(tax_sum,
+           metadata,
+           topN = 8,
+           groupID = "Group",
+           style = "group",
+           sorted = "abundance",
+           subgroup = NULL) {
+    # 依赖关系检测与安装
+    p_list = c("ggplot2", "reshape2")
+    for (p in p_list) {
+      if (!requireNamespace(p)) {
+        install.packages(p)
+      }
+      library(
+        p,
+        character.only = TRUE,
+        quietly = TRUE,
+        warn.conflicts = FALSE
+      )
+    }
+    
+    # 测试默认参数
+    # library(amplicon)
+    # tax_sum = tax_phylum
+    # topN = 8
+    # groupID = "Group"
+    # style = "group"
+    # sorted = "abundance"
+    
+    # 交叉筛选
+    idx = rownames(metadata) %in% colnames(tax_sum)
+    metadata = metadata[idx, , drop = F]
+    tax_sum = tax_sum[, rownames(metadata)]
+    
+    # 提取样品组信息,默认为group可指定
+    sampFile = as.data.frame(metadata[, c(groupID, subgroup)], row.names = row.names(metadata))
+    colnames(sampFile)[1] = "group"
+    
+    # 按丰度降序排序
+    mean_sort = as.data.frame(tax_sum[(order(-rowSums(tax_sum))),])
+    # 把末分类调整到最后面
+    idx = grepl("unassigned|unclassified|unknown",
+                rownames(mean_sort),
+                ignore.case = T)
+    mean_sort = rbind(mean_sort[!idx, ], mean_sort[idx, ])
+    # 筛选前N类，其它归为Other，可设置不同组数
+    other = colSums(mean_sort[topN:dim(mean_sort)[1],])
+    mean_sort = mean_sort[1:(topN - 1),]
+    mean_sort = rbind(mean_sort, other)
+    rownames(mean_sort)[topN] = c("Other")
+    # 保存变量备份，并输出至文件
+    merge_tax = mean_sort
+    
+    if (!is.null(subgroup)){
+      style = "subgroup"
+    }
+    
+    if (style == "sample") {
+      # 添加分类学并设置排序方式，默认字母，abundancer按丰度
+      mean_sort$Taxonomy = rownames(mean_sort)
+      data_all = as.data.frame(melt(mean_sort, id.vars = c("Taxonomy")))
+      if (sorted == "abundance") {
+        data_all$Taxonomy  = factor(data_all$Taxonomy, levels = rownames(mean_sort))
+      }
+      # set group facet
+      data_all = merge(data_all, sampFile, by.x = "variable", by.y = "row.names")
+      
+      # 按group分面，x轴范围自由否则位置异常，swith设置标签底部，并调置去除图例背景
+      # 关闭x轴刻度和标签
+      
+      p = ggplot(data_all, aes(x = variable, y = value, fill = Taxonomy)) +
+        geom_bar(stat = "identity",
+                 position = "fill",
+                 width = 1) +
+        scale_y_continuous(labels = scales::percent) +
+        facet_grid(~ group, scales = "free_x", switch = "x") +
+        theme(strip.background = element_blank()) +
+        theme(axis.ticks.x = element_blank(), axis.text.x = element_blank()) +
+        xlab("Groups") + ylab("Percentage (%)") +
+        theme_classic() + theme(axis.text.x = element_text(
+          angle = 45,
+          vjust = 1,
+          hjust = 1
+        )) +
+        theme(text = element_text(family = "sans", size = 7))
+      p
+    } else{
+      if (!is.null(subgroup)) {
+        mat_t = t(merge_tax)
+        mat_t2 = merge(sampFile, mat_t, by = "row.names")
+        mat_t2 = mat_t2[, c(-1)]
+        
+        ncol_sampFile <- ncol(sampFile)
+        # �������ֵ��ת�ã�����������
+        mat_mean = aggregate(mat_t2[, -(1:ncol_sampFile)], by = mat_t2[c(1:ncol_sampFile)], FUN =
+                               mean) # mean
+        #mat_mean_final = do.call(rbind, mat_mean)[-1,]
+        #geno = mat_mean$group
+        #colnames(mat_mean_final) = geno
+        #mean_sort=as.data.frame(mat_mean_final)
+        
+        # ���ӷ���ѧ����������ʽ��Ĭ����ĸ��abundancer�����
+        #mean_sort$Taxonomy = rownames(mean_sort)
+        #data_all = as.data.frame(melt(mean_sort, id.vars=c("Taxonomy")))
+        data_all = melt(mat_mean, variable.name = "Taxonomy")
+        if (sorted == "abundance") {
+          data_all$Taxonomy  = factor(data_all$Taxonomy, levels = rownames(mean_sort))
+        }
+        data_all$value = as.numeric(data_all$value)
+        
+        variable_en = sym(subgroup)
+        
+        p = ggplot(data_all, aes(
+          x = !!variable_en,
+          y = value,
+          fill = Taxonomy
+        )) +
+          geom_bar(stat = "identity",
+                   position = "fill",
+                   width = 0.7) +
+          scale_y_continuous(labels = scales::percent) +
+          facet_grid(~ group, scales = "free_x", switch = "x") +
+          xlab("Groups") + ylab("Percentage (%)") + theme_classic() +
+          theme(text = element_text(family = "sans", size = 7))
+      } else {
+        # 按组合并求均值
+        
+        # 转置样品名添加组名，并去除多余的两个样品列
+        mat_t = t(merge_tax)
+        mat_t2 = merge(sampFile, mat_t, by = "row.names")
+        mat_t2 = mat_t2[, c(-1)]
+        
+        # 按组求均值，转置，再添加列名
+        mat_mean = aggregate(mat_t2[, -1], by = mat_t2[1], FUN = mean) # mean
+        mat_mean_final = do.call(rbind, mat_mean)[-1, ]
+        geno = mat_mean$group
+        colnames(mat_mean_final) = geno
+        mean_sort = as.data.frame(mat_mean_final)
+        
+        # 添加分类学并设置排序方式，默认字母，abundancer按丰度
+        mean_sort$Taxonomy = rownames(mean_sort)
+        data_all = as.data.frame(melt(mean_sort, id.vars = c("Taxonomy")))
+        if (sorted == "abundance") {
+          data_all$Taxonomy  = factor(data_all$Taxonomy, levels = rownames(mean_sort))
+        }
+        data_all$value = as.numeric(data_all$value)
+        p = ggplot(data_all, aes(x = variable, y = value, fill = Taxonomy)) +
+          geom_bar(stat = "identity",
+                   position = "fill",
+                   width = 0.7) +
+          scale_y_continuous(labels = scales::percent) +
+          xlab("Groups") + ylab("Percentage (%)") + theme_classic() +
+          theme(text = element_text(family = "sans", size = 7))
+      }
+      p
+    }
+  }
+
+
+library(RColorBrewer)
+load("data/tax_phylum.rda")
+
+metadata=read.table("data/metadata.txt", header=T, row.names=1, sep="\t", 
+                    comment.char="", stringsAsFactors=F)
+
+
+# 门水平物种组成表和元数据作为输入，分组列名为Group，默认显示前8个分类，按丰度排序
+p=tax_stackplot(tax_phylum, metadata, groupID="Group")
+zoom=1.2 # 控制图片缩放比例
+# 输出图片
+ggsave(paste0("p1.stackplot.group.jpg"), p, width=89*zoom, height=56*zoom, units="mm")
+
+
+# topN指定图例数量，style指定类型为样本/分组，排序可选字母
+p=tax_stackplot(tax_phylum, metadata, groupID="Group", topN=10, 
+                style="sample", sorted="alphabet") +
+  scale_fill_brewer(palette="Set3")
+# 保存图片
+zoom=1.5 # 控制图片缩放比例
+ggsave(paste0("p2.stackplot.sample.jpg"), p, width=89*zoom, height=56*zoom, units="mm")
+
