@@ -1,0 +1,55 @@
+---
+title: "meta_analysis_with_R"
+author: "Biao Dong"
+date: "2023-01-16"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# pkgs <- c("mada", "meta", "metafor", "metasens", "mvmeta", "netmeta",
+#           "rmeta", "ellipse")
+# install.packages(pkgs, repos="http://cran.at.r-project.org/")
+```
+
+# Standard Methods
+## 1 Fixed Effect and Random Effects Meta-Analysis
+### 1.1 Effect Measures for Continus Outcomes
+Variable names in R datasets for meta-analysis of continuous responses
+
+```{r figname, echo=FALSE, fig.cap="variable name", out.width = '100%'}
+knitr::include_graphics("image/variable_name.jpg")
+```
+#### 1.1.1 **Mean Difference**
+THe estimated mean difference $\hat \mu_k = \hat \mu_{ek} - \hat \mu_{ck}$  
+variance estimate : $Var(\hat \mu_k) = \frac {s_{ek}^2}{n_{ek}} + \frac {s_{ck}^2}{n_ck}$
+An approximate two-sided (1 - $\alpha$) confidence interval for the mean difference  
+is given by $(\hat \mu_{ek} - \hat \mu_{ck}) = Z_{1 - \frac {\alpha}{2}} \sqrt {\frac {s_{ek}^2}{n_{ek}} + \frac {s_{ck}^2}{n_ck}}$
+
+```{r}
+# 1. Read in the data
+library(meta)
+data1 <- read.csv("data/dataset01.csv", as.is=TRUE)
+# 2. Calculate mean difference and its standard error for
+#    study 1 (Boner 1988) of dataset data1:
+MD <- with(data1[1,], Me - Mc)
+seMD <- with(data1[1,], sqrt(Se^2/Ne + Sc^2/Nc))
+# 3. Print mean difference and limits of 95% confidence
+#    interval using round function to show only two digits:
+# base R
+round(c(MD, MD + c(-1,1) * qnorm(1-(0.05/2)) * seMD), 2)
+with(data1[1, ],
+     print(metacont(Ne, Me, Se, Nc, Mc, Sc),
+           digits=2))
+# print(metacont(Ne, Me, Se, Nc, Mc, Sc,
+#                data=data1, subset=1), digits=2)
+zscore <- MD/seMD
+round(c(zscore, 2*pnorm(abs(zscore), lower.tail=FALSE)), 4)
+```
+
+
