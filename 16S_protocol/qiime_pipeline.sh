@@ -223,6 +223,12 @@ qiime feature-classifier classify-sklearn \
   --i-reads ${project_name}/rep-seqs.qza \
   --p-n-jobs 8 \
   --o-classification ${project_name}/taxonomy.qza
+
+qiime taxa barplot \
+    --i-table ${project_name}/table.qza \
+    --i-taxonomy ${project_name}/taxonomy.qza \
+    --m-metadata-file ${project_name}/metadata.txt \
+    --o-visualization ${project_name}/taxa-bar-plots.qzv
 #导出物种注释分类水平
 level=(2 3 4 5 6)
 for i in ${level[*]}; do
