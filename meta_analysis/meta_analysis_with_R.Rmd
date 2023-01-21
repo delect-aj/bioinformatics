@@ -1,10 +1,24 @@
 ---
 title: "meta_analysis_with_R"
-author: "Biao Dong"
+author: "董彪"
 date: "2023-01-16"
 output:
   html_document:
     df_print: paged
+    theme: cerulean
+    highlight: haddock
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+    code_fold: show
+  word_document:
+    toc: yes
+    toc_depth: '3'
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
 ---
 
 ```{r setup, include=FALSE}
@@ -82,7 +96,7 @@ print(metacont(Ne, Me, Se, Nc, Mc, Sc, sm="SMD",
 
 ### **1.2 Fixed Effect Model**  
 The fixed effect model is  
-$\hat \theta_k = \theta + \sigma_k \epsilon_k$, $\epsilon_k ~ N(0,1)$  
+$\hat \theta_k = \theta + \sigma_k \epsilon_k$, $\epsilon_k \sim N(0,1)$  
 Fix effect estimate :  
 $\hat \theta_k = \frac {\displaystyle \sum^{K}_{k=1} \hat \theta_k / \sigma_k^2}{\displaystyle \sum^{K}_{k=1} 1 / \sigma_k^2} = \frac {\displaystyle \sum^{K}_{k=1} \hat \theta_k w_k}{\displaystyle \sum^{K}_{k=1} w_k}$  
 The variance of $\hat \theta_F$ is estimated by:  
@@ -151,3 +165,16 @@ round(c(mc2$TE.fixed, mc2$seTE.fixed^2), 4)
 print(summary(mc2), digits=2)
 ```
 
+### **1.3 Random Effects Model**
+more variable than assumed in fixed model  
+$\hat \theta_k = \theta +u + \sigma_k \epsilon_k$, $\epsilon_k \sim N(0, 1), u_k \sim N(0, \tau^2)$  
+$Q = \displaystyle \sum^{K}_{k=1} w_k (\hat \theta_k - \hat \theta_r)^2$  
+$S = \displaystyle \sum^{K}_{k=1} w_k - \frac {\displaystyle \sum^{K}_{k=1}w_k^2}{\displaystyle \sum^{K}_{k=1}w_k}$  
+if $Q < (K - 1)$, then $\hat \tau^2$ is set to 0 and random effects estimate $\hat \theta_R$  
+is set equal to fixed effect estimate $\hat \theta_F$.  
+$\hat \tau^2 = \frac {Q - (K - 1)}{S}$  
+random effects estimate (DerSimonian-Laird):
+$\hat \theta_R = \frac {\displaystyle \sum^{K}_{k=1} w^*_k \hat \theta_k}{\displaystyle \sum^{K}_{k=1} w^*_k}$  
+$Var(\hat \theta_R) = \frac {1}{\displaystyle \sum^{K}_{k=1} w^*_k}$, with weight $w^*_k = 1 / (\sigma^2_k + \hat \tau^2)$  
+confidence interval for $\hat \theta_R$:
+$\hat \theta_R \pm Z_{1 - \frac {\alpha}{2} S.E.(\hat \theta_R)}$  
