@@ -106,7 +106,7 @@ beta_pcoa <- function(dis_mat, metadata, groupID="Group", ellipse=T, label=F, PC
 distance_type = "bray_curtis"
 # Data reading
 distance_mat = read.table(paste0("data/", distance_type,".txt"), header=T, row.names=1, sep="\t", comment.char="")
-distance_mat[1:3, 1:3]
+
 
 p = beta_pcoa(distance_mat, metadata, groupID = "Group")
 
