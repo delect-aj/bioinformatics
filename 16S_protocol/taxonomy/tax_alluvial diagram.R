@@ -98,7 +98,7 @@ tax_alluvial <- function(
 otutab <- read.table("data/otutab.txt", header=T, row.names=1, sep="\t", comment.char="", stringsAsFactors=F)
 metadata <- read.table("data/metadata.txt", header=T, row.names=1, sep="\t", 
                        comment.char="", stringsAsFactors=F)
-taxonomy=read.table("data/taxonomy.txt", header=T, row.names=1, sep="\t", comment.char="", stringsAsFactors=F)
+taxonomy <- read.table("data/taxonomy.txt", header=T, row.names=1, sep="\t", comment.char="", stringsAsFactors=F)
 
 p <- tax_alluvial(otu = otutab, map = metadata, tax = taxonomy, list_group = c("OE", "KO"),
                   j = "Phylum", Top = 10)
