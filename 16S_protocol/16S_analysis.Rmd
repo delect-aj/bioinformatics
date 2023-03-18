@@ -9,6 +9,7 @@ output: word_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<<<<<<< HEAD
 
 # 分类器训练
 ```{bash}
@@ -34,6 +35,18 @@ awk '{system("fastp -i data/rawdata/"$1"_1.fq.gz \
 # 上游分析qiime2
 ```{bash}
 # 激活QIIME2工作环境
+=======
+# 上游分析qiime2
+```{bash}
+# 设置工作目录
+wd=
+
+# 进入工作目录
+cd ${wd}
+# 激活QIIME2工作环境
+module load miniconda/4.9.2
+source activate qiime2-2022.2
+>>>>>>> a10c74c9e26cc223413f48f7a2032550c0176fa7
 
 # 根据sample list生成manifest文件, 双端数据，数据建议放在rawdata文件夹下
 awk -F '\r' 'NR==1{print "sample-id\tforward-absolute-filepath\treverse-absolute-filepath"} \
