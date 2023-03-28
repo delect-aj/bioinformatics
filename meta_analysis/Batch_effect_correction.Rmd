@@ -1,0 +1,144 @@
+---
+title: "Batch_effect_correction"
+author: "Dong Biao"
+date: "2023-03-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 导入R包
+```{r, include=FALSE, message=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+library(MMUPHin)
+library(magrittr)
+library(dplyr)
+library(ggplot2)
+library(qiime2R)
+library(tidyverse)
+```
+
+## Input data
+```{r}
+otu_table <- read_qza("age_prediction/data/table.qza")$data %>% as.data.frame()
+metadata <- readxl::read_xlsx("age_prediction/data/metadata.xlsx") %>% column_to_rownames("sample-id") %>%
+    filter(age != "NA")
+
+# 取交集
+id <- intersect(colnames(otu_table), rownames(metadata))
+otu_table <- otu_table[, id]
+metadata <- metadata[id, ]
+
+### 转化成相对丰度
+# otu_table <- apply(otu_table, 2, function (x) x / sum(x)) %>% as.data.frame()
+otu_table[1:5, 1, drop = FALSE]
+table(metadata$project_ID)
+```
+
+## Original data PCoA
+```{r, message=FALSE}
+library(vegan, quietly = TRUE)
+dis <- vegdist(t(otu_table))
+pcoa=cmdscale(dis, k=3, eig=T) # k is dimension, 3 is recommended; eig is eigenvalues
+points=as.data.frame(pcoa$points) # get coordinate string, format to dataframme
+eig=pcoa$eig
+points=cbind(points, metadata[rownames(points), c("project_ID", "diagnose")])
+colnames(points)=c("x", "y", "z", "group", "diagnose")
+
+# 按1、2轴绘图
+p<-ggplot(points, aes(x=x, y=y, color=group, shape=diagnose))+
+  labs(x=paste("PCo 1 (", format(100 * eig[1] / sum(eig), digits=4), "%)", sep=""),
+       y=paste("PCo 2 (", format(100 * eig[2] / sum(eig), digits=4), "%)", sep=""))+
+  geom_point(alpha=.7, size=5) + theme_classic() + theme(text=element_text(family="sans", size=7))
+p
+```
+## adjust_batch
+```{r, message=FALSE}
+metadata$project_ID <- factor(metadata$project_ID)
+fit_adjust_batch <- adjust_batch(feature_abd = otu_table,
+                                 batch = "project_ID",
+                                 data = metadata,
+                                 control = list(verbose = FALSE))
+
+otu_abd_adj <- fit_adjust_batch$feature_abd_adj
+```
+## adjust after
+```{r, message=FALSE}
+
+dis <- vegdist(t(otu_abd_adj))
+pcoa=cmdscale(dis, k=3, eig=T) # k is dimension, 3 is recommended; eig is eigenvalues
+points=as.data.frame(pcoa$points) # get coordinate string, format to dataframme
+eig=pcoa$eig
+points=cbind(points, metadata[rownames(points), c("project_ID", "diagnose")])
+colnames(points)=c("x", "y", "z", "group", "diagnose")
+
+# 按1、2轴绘图
+p<-ggplot(points, aes(x=x, y=y, color=group, shape=diagnose))+
+  labs(x=paste("PCo 1 (", format(100 * eig[1] / sum(eig), digits=4), "%)", sep=""),
+       y=paste("PCo 2 (", format(100 * eig[2] / sum(eig), digits=4), "%)", sep=""))+
+  geom_point(alpha=.7, size=5) + theme_classic() + theme(text=element_text(family="sans", size=7))
+p
+```
+
+
+## PERMANOVA test 
+```{r, message=FALSE}
+D_before <- vegdist(t(otu_table))
+D_after <- vegdist(t(otu_abd_adj))
+
+set.seed(1)
+fit_adonis_before <- adonis(D_before ~ project_ID, data = metadata)
+
+fit_adonis_after <- adonis(D_after ~ project_ID, data = metadata)
+
+print(fit_adonis_before$aov.tab)
+
+print(fit_adonis_after$aov.tab)
+```
+## remove batch effect with ConQuR
+```{r}
+library(ConQuR)
+library(doParallel)
+```
+
+## 准备数据
+```{r}
+tax_tab <- otu_table %>% t() %>% as.data.frame() 
+batchid <- factor(metadata[, "project_ID"])
+covar = metadata[, c('age', 'gender')]
+summary(covar)
+```
+
+## The choice of reference batch affects
+```{r}
+result_tuned = Tune_ConQuR(tax_tab=tax_tab, batchid=batchid, covariates=covar, 
+                           batch_ref_pool=c("PRJNA386665", "PRJNA870048"),
+                           logistic_lasso_pool=F, 
+                           quantile_type_pool=c("standard", "lasso"),
+                           simple_match_pool=F,
+                           lambda_quantile_pool=c(NA, "2p/n"),
+                           interplt_pool=F,
+                           frequencyL=0,
+                           frequencyU=1)
+```
+
+## Check the fine-tuned correcte taxa read count table:
+```{r}
+taxa_optimal = result_tuned$tax_final
+
+par(mfrow=c(1, 2))
+Plot_PCoA(TAX=taxa_optimal, factor=batchid, main="Fine-Tuned ConQuR, Bray-Curtis")
+Plot_PCoA(TAX=taxa_optimal, factor=batchid, dissimilarity="Aitch", main="Fine-Tuned ConQuR, Aitchison")
+```
+
+
+```{r}
+taxa_corrected2 = ConQuR(tax_tab=tax_tab, batchid=batchid, covariates=covar, batch_ref="PRJNA870048",
+                         logistic_lasso=T, quantile_type="lasso", interplt=T)
+taxa_corrected2[146:150, 1:5]
+```
+

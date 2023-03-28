@@ -1,0 +1,176 @@
+---
+title: "age_predictin"
+author: "Dong Biao"
+date: "2023-03-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 加载需要的包
+```{r, include=FALSE}
+p <- c("reshape2","ggplot2", "dplyr", "biomformat", "devtools", 
+       "crossRanger", "viridis", "qiime2R", "tidyverse")
+usePackage <- function(p) {
+  if (!is.element(p, installed.packages()[,1]))
+    install.packages(p, dep=TRUE, repos="https://cloud.r-project.org/")
+  suppressWarnings(suppressMessages(invisible(require(p, character.only=TRUE))))
+}
+invisible(lapply(p, usePackage))
+```
+
+### 加载metadata和table
+```{r, include=FALSE}
+datafile <- read_qza("data/table.qza")$data %>% as.data.frame()
+sample_metadata <- read.table("data/metadata.txt", sep = "\t", header = TRUE) %>%
+    distinct(sample.id, .keep_all = T) %>% column_to_rownames("sample.id")
+fmetadata <- read.table("data/taxonomy.txt", sep = "\t", header = TRUE)
+fmetadata <- mutate(fmetadata, id = paste("x", fmetadata$id, sep = ""))
+prefix_name <- "oral"
+outpath <- "./output/age_RF.clf_out/"
+dir.create(outpath)
+```
+
+
+```{r}
+add_ann<-function(tab, fmetadata, tab_id_col=1, fmetadata_id_col=1){
+  matched_idx<-which(fmetadata[, fmetadata_id_col] %in% tab[, tab_id_col])
+  uniq_features_len<-length(unique(tab[, tab_id_col]))
+  if(uniq_features_len>length(matched_idx)){
+    warning("# of features has no matching IDs in the taxonomy file: ", uniq_features_len-length(matched_idx), "\n")
+  }
+  fmetadata_matched<-fmetadata[matched_idx,]
+  out<-merge(tab, fmetadata_matched, by.x=tab_id_col, by.y=fmetadata_id_col)
+  out
+}
+```
+
+### Matching SampleID between biom data and metadata
+### To filter out samples with null values in both  and c categories
+```{r}
+sample_metadata <- sample_metadata[!is.na(sample_metadata$age), ]
+sample_metadata <- sample_metadata[!is.na(sample_metadata$gender), ]
+id = intersect(colnames(datafile), rownames(sample_metadata))
+datafile <- datafile[, id] %>% t() %>% as.data.frame()
+sample_metadata <- sample_metadata[id, ]
+head(datafile[1:5, 1:5])
+head(sample_metadata, n = 5)
+```
+
+### fitler variables in microbiota data
+```{r}
+cat("The number of samples : ", nrow(datafile) ,"\n")
+cat("The number of variables : ", ncol(datafile) ,"\n")
+#-------------------------------filtering taxa with zero variance
+datafile <- datafile[,which(apply(datafile, 2, var)!=0)]
+cat("The number of fitlered variables (removed variables with zero variance) : ", ncol(datafile) ,"\n")
+#-------------------------------filtering taxa with X% non-zero values
+NonZero.p<-0.995
+datafile <- datafile[,which(colSums(datafile==0) < NonZero.p*nrow(datafile))]
+cat("The number of variables (removed variables containing over ", NonZero.p," zero) in training data: ", ncol(datafile) ,"\n")
+```
+
+### rf_clf using healthy sample
+```{r}
+Healthy_metadata <- sample_metadata %>% filter(diagnose == "Healthy_control")
+x <- datafile[rownames(Healthy_metadata), ]
+colnames(x) <- paste("x", colnames(x), sep = "")
+all_res_file <- paste(outpath, prefix_name, "_rf_clf_all_res.RData", sep="")
+if(file.exists(all_res_file)){
+  rf_all <- get(load(all_res_file))
+}else{
+  rf_all<-rf.cross.validation(x=x, y=y, ntree = 500, nfolds = 5, sparse=TRUE)
+  save(rf_all, file=all_res_file)
+}
+cat(mean(rf_all$MAE), "+-", sd(rf_all$MAE), "\n")
+cat(mean(rf_all$R_squared),"+-", sd(rf_all$R_squared),  "\n")
+plot_obs_VS_pred(rf_all$y, rf_all$predicted, prefix="train", target_field="age", span=1, outdir = outpath)
+```
+
+### ## "rf_reg.by_datasets" runs standard random forests with oob estimation for regression of
+```{r}
+all_table <- datafile
+colnames(all_table) <- paste("x", colnames(all_table), sep="")
+res_file<-paste(outpath, prefix_name, "_rf_reg.by_datasets_res.RData", sep="")
+if(file.exists(res_file)){
+  load(res_file)
+}else{
+  rf_reg_res<-rf_reg.by_datasets(all_table, sample_metadata, "diagnose", "age",
+                                 nfolds=3, verbose=FALSE, ntree=500)
+  save(rf_reg_res, file=res_file)
+}
+## replace imp scores 0 with NA for features whose prevelance equal to 0
+for(i in 1:length(rf_reg_res$feature_imps_list)) {
+  rf_reg_res$feature_imps_list[[i]][colSums(rf_reg_res$x_list[[i]])==0]<-NA
+}
+rf_reg_res$feature_imps_rank_list<-lapply(rf_reg_res$feature_imps_list, function(i) rank(-i, na.last = "keep"))
+#rf_reg_res.summ<-plot.reg_res_list(rf_reg_res, outdir=outpath)
+feature_res<-do.call(cbind, rf_reg_res$feature_imps_list)
+feature_res_rank<-apply(feature_res, 2, function(x) rank(-x, na.last = "keep"))
+rf_models<-rf_reg_res$rf_model_list
+# Add feature annotations using feature metadata
+feature_res<-data.frame(Feature.ID=rownames(feature_res), feature_res)
+feature_res<-add_ann(feature_res, fmetadata)
+feature_res_rank<-add_ann(data.frame(feature=rownames(feature_res_rank), feature_res_rank), fmetadata)
+sink(paste(outpath,"feature_imps_all.xls",sep=""));write.table(feature_res,quote=FALSE,sep="\t", row.names = F);sink()
+sink(paste(outpath,"feature_imps_rank_all.xls",sep=""));write.table(feature_res_rank,quote=FALSE,sep="\t", row.names = F);sink()
+
+```
+
+
+#-------------------------------
+# rf_reg.cross_appl
+#-------------------------------
+# "rf_reg.cross_appl" runs standard random forests with oob estimation for regression of
+# c_category in each the sub-datasets splited by the s_category,
+# and apply the model to all the other datasets.
+```{r}
+crossRF_res<-rf_reg.cross_appl(rf_reg_res, rf_reg_res$x_list, rf_reg_res$y_list)
+perf_summ<-crossRF_res$perf_summ
+
+#' The performance (MAE) of cross-applications
+#' The heatmap indicating MAE in the self-validation and cross-applications
+self_validation=as.factor(perf_summ$Train_data==perf_summ$Test_data)
+library(viridis)
+p_MAE<-ggplot(perf_summ, aes(x=as.factor(Test_data), y=as.factor(Train_data), z=MAE)) +
+  xlab("Test data")+ylab("Train data")+
+  geom_tile(aes(fill = MAE, color = self_validation, width=0.9, height=0.9), size=1) + #
+  scale_color_manual(values=c("white","grey80"))+
+  geom_text(aes(label = round(MAE, 2)), color = "white") +
+  scale_fill_viridis()+
+  theme_bw() + theme_classic() +
+  theme(axis.line = element_blank(), axis.text.x = element_text(angle = 90),
+        axis.ticks = element_blank())
+p_MAE
+
+```
+
+```{r}
+#' The scatter plot matrix showing predicted and Reported values in the self-validation and cross-applications
+predicted_summ<-dplyr::bind_rows(crossRF_res$predicted, .id = "Train_data__VS__test_data")
+tmp<-data.frame(do.call(rbind, strsplit(predicted_summ$Train_data__VS__test_data, "__VS__")))
+colnames(tmp)<-c("Train_data", "Test_data")
+self_validation=as.factor(tmp$Train_data==tmp$Test_data)
+predicted_summ<-data.frame(tmp, self_validation, predicted_summ)
+
+#l<-levels(data$sex); l_sorted<-sort(levels(data$sex))
+Mycolor <- c("#0072B2", "#D55E00")
+#if(identical(order(l), order(l_sorted))){Mycolor=Mycolor }else{Mycolor=rev(Mycolor)}
+target_variable="age"
+p_scatter<-ggplot(predicted_summ, aes(x=test_y, y=pred_y))+
+         ylab(paste("Predicted ",target_variable,sep=""))+
+         xlab(paste("Reported ",target_variable,sep=""))+
+         geom_point(aes(color=self_validation), alpha=0.1)+
+         geom_smooth(aes(color=self_validation), method="loess",span=1)+
+         scale_color_manual(values = Mycolor)+
+         facet_grid(Train_data~Test_data)+
+        theme_bw()+
+        theme(axis.line = element_line(color="black"),
+        strip.background = element_rect(colour = "white"),
+        panel.border = element_blank())+
+        theme(legend.position="none")
+p_scatter
+```
+
