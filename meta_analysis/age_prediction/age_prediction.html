@@ -384,12 +384,12 @@ id = intersect(colnames(datafile), rownames(sample_metadata))
 datafile &lt;- datafile[, id] %&gt;% t() %&gt;% as.data.frame()
 sample_metadata &lt;- sample_metadata[id, ]
 head(datafile[1:5, 1:5])</code></pre>
-<pre><code>##         1000148 1000269 1000563 1000647 1000973
-## S039-TY       0       0       0       0      37
-## S014-TY       0       0       0       0     421
-## S043-TY       0       0       0       0      25
-## S025-TY       0       0       0       0      89
-## S031-TY       0       0       0       0       7</code></pre>
+<pre><code>##         1000148 1000269 1000563 1000647      1000973
+## S039-TY       0       0       0       0 0.0009590461
+## S014-TY       0       0       0       0 0.0082576545
+## S043-TY       0       0       0       0 0.0004858237
+## S025-TY       0       0       0       0 0.0011301300
+## S031-TY       0       0       0       0 0.0001552347</code></pre>
 <pre class="r"><code>head(sample_metadata, n = 5)</code></pre>
 <pre><code>##         sample_type project_ID sequencing_region diagnose age gender BMI
 ## S039-TY      Saliva  OEP000837             V3-V4     OSCC  73      M  NA

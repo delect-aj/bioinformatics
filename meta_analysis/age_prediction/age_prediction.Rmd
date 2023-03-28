@@ -23,7 +23,8 @@ invisible(lapply(p, usePackage))
 
 ### 加载metadata和table
 ```{r, include=FALSE}
-datafile <- read_qza("data/table.qza")$data %>% as.data.frame()
+datafile <- read_qza("data/table.qza")$data %>% as.data.frame() %>%
+  apply(2, function(x) x/sum(x))
 sample_metadata <- read.table("data/metadata.txt", sep = "\t", header = TRUE) %>%
     distinct(sample.id, .keep_all = T) %>% column_to_rownames("sample.id")
 fmetadata <- read.table("data/taxonomy.txt", sep = "\t", header = TRUE)
