@@ -1,47 +1,3 @@
-# 绘制样本/组层级聚类图+相对丰度堆叠柱状图
-#
-# The function named 'tax_stack_clust'
-# which draw cluster tree + stackplot with taxonomy and metadata, and return a ggplot2 object
-#
-# You can learn more about package at:
-#
-#   https://github.com/microbiota/amplicon
-
-#' @title Plotting cluster tree + stackplot of taxonomy samples and groups
-#' @description Combine sample clustering tree and drawing stacked barplot of taxonomic composition
-#' @param otu OTU/ASV table;
-#' @param map Sample metadata;
-#' @param tax taxonomy table
-#' @param rep Number of sample replicates measured in each group
-#' @param Top Number of Top N abundance taxa in all samples
-#' @param hcluter_method hcluster method
-#' @param Group column name for groupID in map table.
-#' @param cuttree cut number
-#' @details
-#' hclust method is same an function hclust
-#' @return list contain ggplot object and table.
-#' @author Contact: Tao Wen \email{2018203048@@njau.edu.cn}, Yong-Xin Liu \email{yxliu@@genetics.ac.cn}
-#' @references
-#'
-#' Yong-Xin Liu, Yuan Qin, Tong Chen, Meiping Lu, Xubo Qian, Xiaoxuan Guo & Yang Bai.
-#' A practical guide to amplicon and metagenomic analysis of microbiome data.
-#' Protein Cell, 2020(41), 1-16, DOI: \url{https://doi.org/10.1007/s13238-020-00724-8}
-#'
-#' @examples
-#' # Input is OTU table, metadata and taxonomy
-#' result = tax_stack_clust (otutab, metadata, taxonomy)
-#' # Results: 1 sample tree, 2 sample tree + stackplot, 3 group gree, 4 group tree + stackplot, 5 data table; Such show result 2
-#' result[2]
-#' # Data form files
-#' metadata=read.table("http://210.75.224.110/github/EasyAmplicon/data/metadata.tsv", header=T, row.names=1, sep="\t", comment.char="", stringsAsFactors=F)
-#' otutab=read.table("http://210.75.224.110/github/EasyAmplicon/data/otutab.txt", header=T, row.names=1, sep="\t", comment.char="", stringsAsFactors=F)
-#' taxonomy=read.table("http://210.75.224.110/github/EasyAmplicon/data/taxonomy.txt", header=T, row.names=1, sep="\t", comment.char="", stringsAsFactors=F)
-#' # Full parameters: cluster distance metric (dist as bray, jaccard, manhattan...), Group column (Group), taxonomic level (j as Phylum, Class, Order...), TopN (Top)
-#' result <-  tax_stack_clust (otu=otutab, map=metadata, tax=taxonomy,
-#'    dist="bray", Group="Group", j="Phylum", Top=10, rep=6,
-#'    tran=TRUE, hcluter_method="complete", cuttree=3)
-#'@export
-
 tax_stack_clust <- function(
     otu=NULL,
     map=NULL,
@@ -96,6 +52,10 @@ tax_stack_clust <- function(
   idx=rownames(otu) %in% rownames(tax)
   otu=otu[idx,]
   tax=tax[rownames(otu),]
+  
+  idx = rownames(map) %in% colnames(otu)
+  map = map[idx, , drop = F]
+  otu = otu[, rownames(map)]
   
   # 分组列重命名为Group
   map <- map[Group]
@@ -197,32 +157,3 @@ tax_stack_clust <- function(
   
   return(list(p,p1,p3,p4,Taxonomies))
 }
-
-library(ggplot2)
-library(ggdendro)
-library(phyloseq)
-library(tidyverse)
-library(ggtree)
-library(ggstance)
-
-otutab <- read.table("data/otutab.txt", header=T, row.names=1, sep="\t", comment.char="", stringsAsFactors=F)
-metadata <- read.table("data/metadata.txt", header=T, row.names=1, sep="\t", 
-                       comment.char="", stringsAsFactors=F)
-taxonomy=read.table("data/taxonomy.txt", header=T, row.names=1, sep="\t", comment.char="", stringsAsFactors=F)
-
-
-result <- tax_stack_clust(otu=otutab, tax=taxonomy, map=metadata,
-                          rep=6, # 重复数量是6个
-                          Top=10, # 提取丰度前十的物种注释
-                          tran=TRUE, # 转化为相对丰度值
-                          dist="bray", hcluter_method="complete",
-                          cuttree=3,
-                          Group="Group")
-p1 <- result[[1]]
-p2 <- result[[2]]
-p3 <- result[[3]]
-
-zoom=2 # 控制图片缩放比例
-# 输出图片
-ggsave(paste0("p7.stack_cluster.sample.jpg"), p, width=89*zoom, height=56*zoom, units="mm")
-

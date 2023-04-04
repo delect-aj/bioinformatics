@@ -1,0 +1,613 @@
+2023-04-04 13:51:59 INFO::Writing function arguments to log file
+2023-04-04 13:51:59 DEBUG::Function arguments
+2023-04-04 13:51:59 DEBUG::Output folder: test/maaslin_out
+2023-04-04 13:51:59 DEBUG::Min Abundance: 0.000100
+2023-04-04 13:51:59 DEBUG::Min Prevalence: 0.100000
+2023-04-04 13:51:59 DEBUG::Normalization: CLR
+2023-04-04 13:51:59 DEBUG::Transform: LOG
+2023-04-04 13:51:59 DEBUG::Analysis method: LM
+2023-04-04 13:51:59 DEBUG::Max significance: 0.250000
+2023-04-04 13:51:59 DEBUG::Random effects: Site
+2023-04-04 13:51:59 DEBUG::Fixed effects: Group
+2023-04-04 13:51:59 DEBUG::Correction method: BH
+2023-04-04 13:51:59 DEBUG::Standardize: TRUE
+2023-04-04 13:51:59 DEBUG::Cores: 1
+2023-04-04 13:51:59 INFO::Verifying options selected are valid
+2023-04-04 13:51:59 INFO::Determining format of input files
+2023-04-04 13:51:59 INFO::Input format is data samples as rows and metadata samples as rows
+2023-04-04 13:51:59 DEBUG::The following samples were found to have metadata but no features. They will be removed. KO1
+2023-04-04 13:51:59 DEBUG::A total of 17 samples were found in both the data and metadata
+2023-04-04 13:51:59 DEBUG::Reordering data/metadata to use same sample ordering
+2023-04-04 13:51:59 INFO::Formula for random effects: expr ~ (1 | Site)
+2023-04-04 13:51:59 INFO::Formula for fixed effects: expr ~  Group
+2023-04-04 13:51:59 INFO::Filter data based on min abundance and min prevalence
+2023-04-04 13:51:59 INFO::Total samples in data: 17
+2023-04-04 13:51:59 INFO::Min samples required with min abundance for a feature not to be filtered: 1.700000
+2023-04-04 13:51:59 INFO::Total filtered features: 61
+2023-04-04 13:51:59 INFO::Filtered feature names from abundance and prevalence filtering: AEROBACTINSYN.PWY, ARGDEG.PWY, CRNFORCAT.PWY, ECASYN.PWY, FUC.RHAMCAT.PWY, FUCCAT.PWY, GLYCOL.GLYOXDEG.PWY, KDO.NAGLIPASYN.PWY, LACTOSECAT.PWY, LPSSYN.PWY, METH.ACETATE.PWY, METHANOGENESIS.PWY, METHGLYUT.PWY, ORNARGDEG.PWY, P162.PWY, P341.PWY, PWY.1361, PWY.1422, PWY.1541, PWY.3081, PWY.3801, PWY.3941, PWY.4722, PWY.5005, PWY.5088, PWY.5177, PWY.5265, PWY.5499, PWY.5677, PWY.5743, PWY.5744, PWY.5910, PWY.6165, PWY.6167, PWY.6174, PWY.622, PWY.6349, PWY.6350, PWY.6397, PWY.6572, PWY.6581, PWY.6629, PWY.6654, PWY.6713, PWY.6948, PWY.7013, PWY.7024, PWY.7084, PWY.7198, PWY.7210, PWY.7347, PWY.7373, PWY.7391, PWY.7446, PWY.7528, PWY.7644, PWY.922, PWY0.1338, PWY0.41, THREOCAT.PWY, VALDEG.PWY
+2023-04-04 13:51:59 INFO::Total filtered features with variance filtering: 0
+2023-04-04 13:51:59 INFO::Filtered feature names from variance filtering:
+2023-04-04 13:51:59 INFO::Running selected normalization method: CLR
+2023-04-04 13:51:59 INFO::Applying z-score to standardize continuous metadata
+2023-04-04 13:51:59 INFO::Running selected transform method: LOG
+2023-04-04 13:51:59 INFO::Running selected analysis method: LM
+2023-04-04 13:51:59 INFO::Fitting model to feature number 1, X1CMET2.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 2, X3.HYDROXYPHENYLACETATE.DEGRADATION.PWY
+2023-04-04 13:51:59 WARNING::Fitting problem for feature 2 returning NA
+2023-04-04 13:51:59 INFO::Fitting model to feature number 3, ALL.CHORISMATE.PWY
+2023-04-04 13:51:59 WARNING::Fitting problem for feature 3 returning NA
+2023-04-04 13:51:59 INFO::Fitting model to feature number 4, ANAEROFRUCAT.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 5, ANAGLYCOLYSIS.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 6, ARG.POLYAMINE.SYN
+2023-04-04 13:51:59 INFO::Fitting model to feature number 7, ARGORNPROST.PWY
+2023-04-04 13:51:59 WARNING::Fitting problem for feature 7 returning NA
+2023-04-04 13:51:59 INFO::Fitting model to feature number 8, ARGSYN.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 9, ARGSYNBSUB.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 10, ARO.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 11, ASPASN.PWY
+2023-04-04 13:51:59 WARNING::Fitting problem for feature 11 returning NA
+2023-04-04 13:51:59 INFO::Fitting model to feature number 12, AST.PWY
+2023-04-04 13:51:59 WARNING::Fitting problem for feature 12 returning NA
+2023-04-04 13:51:59 INFO::Fitting model to feature number 13, BIOTIN.BIOSYNTHESIS.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 14, BRANCHED.CHAIN.AA.SYN.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 15, CALVIN.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 16, CATECHOL.ORTHO.CLEAVAGE.PWY
+2023-04-04 13:51:59 WARNING::Fitting problem for feature 16 returning NA
+2023-04-04 13:51:59 INFO::Fitting model to feature number 17, CENTFERM.PWY
+2023-04-04 13:51:59 WARNING::Fitting problem for feature 17 returning NA
+2023-04-04 13:51:59 INFO::Fitting model to feature number 18, CHLOROPHYLL.SYN
+2023-04-04 13:51:59 WARNING::Fitting problem for feature 18 returning NA
+2023-04-04 13:51:59 INFO::Fitting model to feature number 19, COA.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 20, COBALSYN.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 21, CODH.PWY
+2023-04-04 13:51:59 WARNING::Fitting problem for feature 21 returning NA
+2023-04-04 13:51:59 INFO::Fitting model to feature number 22, COLANSYN.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 23, COMPLETE.ARO.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 24, DAPLYSINESYN.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 25, DENITRIFICATION.PWY
+2023-04-04 13:51:59 WARNING::Fitting problem for feature 25 returning NA
+2023-04-04 13:51:59 INFO::Fitting model to feature number 26, DENOVOPURINE2.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 27, DHGLUCONATE.PYR.CAT.PWY
+2023-04-04 13:51:59 WARNING::Fitting problem for feature 27 returning NA
+2023-04-04 13:51:59 INFO::Fitting model to feature number 28, DTDPRHAMSYN.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 29, ENTBACSYN.PWY
+2023-04-04 13:51:59 WARNING::Fitting problem for feature 29 returning NA
+2023-04-04 13:51:59 INFO::Fitting model to feature number 30, FAO.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 31, FASYN.ELONG.PWY
+2023-04-04 13:51:59 INFO::Fitting model to feature number 32, FASYN.INITIAL.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 33, FERMENTATION.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 34, FOLSYN.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 35, GALACT.GLUCUROCAT.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 35 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 36, GALACTARDEG.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 36 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 37, GALACTUROCAT.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 37 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 38, GALLATE.DEGRADATION.I.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 38 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 39, GALLATE.DEGRADATION.II.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 39 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 40, GLCMANNANAUT.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 40 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 41, GLUCARDEG.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 41 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 42, GLUCARGALACTSUPER.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 42 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 43, GLUCONEO.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 44, GLUCOSE1PMETAB.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 44 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 45, GLUCUROCAT.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 45 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 46, GLUTORN.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 47, GLYCOCAT.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 48, GLYCOGENSYNTH.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 49, GLYCOLYSIS
+2023-04-04 13:52:00 INFO::Fitting model to feature number 50, GLYCOLYSIS.E.D
+2023-04-04 13:52:00 INFO::Fitting model to feature number 51, GLYCOLYSIS.TCA.GLYOX.BYPASS
+2023-04-04 13:52:00 INFO::Fitting model to feature number 52, GLYOXYLATE.BYPASS
+2023-04-04 13:52:00 INFO::Fitting model to feature number 53, GOLPDLCAT.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 53 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 54, HCAMHPDEG.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 54 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 55, HEME.BIOSYNTHESIS.II
+2023-04-04 13:52:00 INFO::Fitting model to feature number 56, HEMESYN2.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 57, HEXITOLDEGSUPER.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 57 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 58, HISDEG.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 59, HISTSYN.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 60, HOMOSER.METSYN.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 61, HSERMETANA.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 62, ILEUSYN.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 63, KETOGLUCONMET.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 63 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 64, LEU.DEG2.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 65, MET.SAM.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 66, METHYLGALLATE.DEGRADATION.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 66 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 67, NAD.BIOSYNTHESIS.II
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 67 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 68, NADSYN.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 68 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 69, NAGLIPASYN.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 70, NONMEVIPP.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 71, NONOXIPENT.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 72, OANTIGEN.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 73, ORNDEG.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 73 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 74, P101.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 74 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 75, P105.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 76, P108.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 77, P122.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 77 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 78, P124.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 79, P125.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 79 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 80, P161.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 81, P163.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 81 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 82, P164.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 82 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 83, P184.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 83 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 84, P221.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 84 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 85, P23.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 86, P241.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 86 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 87, P261.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 87 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 88, P281.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 88 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 89, P381.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 89 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 90, P4.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 91, P42.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 92, P441.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 92 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 93, P461.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 93 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 94, P562.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 94 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 95, P621.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 95 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 96, PANTO.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 97, PANTOSYN.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 98, PENTOSE.P.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 99, PEPTIDOGLYCANSYN.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 100, PHOSLIPSYN.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 101, POLYAMINSYN3.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 101 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 102, POLYAMSYN.PWY
+2023-04-04 13:52:00 WARNING::Fitting problem for feature 102 returning NA
+2023-04-04 13:52:00 INFO::Fitting model to feature number 103, POLYISOPRENSYN.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 104, PPGPPMET.PWY
+2023-04-04 13:52:00 INFO::Fitting model to feature number 105, PROTOCATECHUATE.ORTHO.CLEAVAGE.PWY
+2023-04-04 13:52:01 INFO::Fitting model to feature number 106, PRPP.PWY
+2023-04-04 13:52:01 INFO::Fitting model to feature number 107, PWY.1269
+2023-04-04 13:52:01 INFO::Fitting model to feature number 108, PWY.1501
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 108 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 109, PWY.1622
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 109 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 110, PWY.181
+2023-04-04 13:52:01 INFO::Fitting model to feature number 111, PWY.1861
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 111 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 112, PWY.1882
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 112 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 113, PWY.2221
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 113 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 114, PWY.2941
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 114 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 115, PWY.2942
+2023-04-04 13:52:01 INFO::Fitting model to feature number 116, PWY.3001
+2023-04-04 13:52:01 INFO::Fitting model to feature number 117, PWY.3661
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 117 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 118, PWY.3781
+2023-04-04 13:52:01 INFO::Fitting model to feature number 119, PWY.4361
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 119 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 120, PWY.4984
+2023-04-04 13:52:01 INFO::Fitting model to feature number 121, PWY.5022
+2023-04-04 13:52:01 INFO::Fitting model to feature number 122, PWY.5028
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 122 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 123, PWY.5097
+2023-04-04 13:52:01 INFO::Fitting model to feature number 124, PWY.5100
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 124 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 125, PWY.5101
+2023-04-04 13:52:01 INFO::Fitting model to feature number 126, PWY.5103
+2023-04-04 13:52:01 INFO::Fitting model to feature number 127, PWY.5104
+2023-04-04 13:52:01 INFO::Fitting model to feature number 128, PWY.5121
+2023-04-04 13:52:01 INFO::Fitting model to feature number 129, PWY.5154
+2023-04-04 13:52:01 INFO::Fitting model to feature number 130, PWY.5178
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 130 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 131, PWY.5180
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 131 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 132, PWY.5181
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 132 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 133, PWY.5182
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 133 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 134, PWY.5183
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 134 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 135, PWY.5188
+2023-04-04 13:52:01 INFO::Fitting model to feature number 136, PWY.5189
+2023-04-04 13:52:01 INFO::Fitting model to feature number 137, PWY.5198
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 137 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 138, PWY.5304
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 138 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 139, PWY.5345
+2023-04-04 13:52:01 INFO::Fitting model to feature number 140, PWY.5347
+2023-04-04 13:52:01 INFO::Fitting model to feature number 141, PWY.5384
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 141 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 142, PWY.5392
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 142 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 143, PWY.5415
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 143 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 144, PWY.5417
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 144 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 145, PWY.5419
+2023-04-04 13:52:01 INFO::Fitting model to feature number 146, PWY.5420
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 146 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 147, PWY.5430
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 147 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 148, PWY.5431
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 148 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 149, PWY.5484
+2023-04-04 13:52:01 INFO::Fitting model to feature number 150, PWY.5505
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 150 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 151, PWY.5507
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 151 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 152, PWY.5509
+2023-04-04 13:52:01 INFO::Fitting model to feature number 153, PWY.5529
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 153 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 154, PWY.5531
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 154 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 155, PWY.5647
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 155 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 156, PWY.5651
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 156 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 157, PWY.5654
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 157 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 158, PWY.5655
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 158 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 159, PWY.5659
+2023-04-04 13:52:01 INFO::Fitting model to feature number 160, PWY.5667
+2023-04-04 13:52:01 INFO::Fitting model to feature number 161, PWY.5676
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 161 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 162, PWY.5686
+2023-04-04 13:52:01 INFO::Fitting model to feature number 163, PWY.5695
+2023-04-04 13:52:01 INFO::Fitting model to feature number 164, PWY.5705
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 164 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 165, PWY.5741
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 165 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 166, PWY.5747
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 166 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 167, PWY.5837
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 167 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 168, PWY.5838
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 168 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 169, PWY.5840
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 169 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 170, PWY.5845
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 170 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 171, PWY.5850
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 171 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 172, PWY.5855
+2023-04-04 13:52:01 INFO::Fitting model to feature number 173, PWY.5856
+2023-04-04 13:52:01 INFO::Fitting model to feature number 174, PWY.5857
+2023-04-04 13:52:01 INFO::Fitting model to feature number 175, PWY.5860
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 175 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 176, PWY.5861
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 176 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 177, PWY.5862
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 177 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 178, PWY.5863
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 178 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 179, PWY.5896
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 179 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 180, PWY.5897
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 180 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 181, PWY.5898
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 181 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 182, PWY.5899
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 182 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 183, PWY.5913
+2023-04-04 13:52:01 INFO::Fitting model to feature number 184, PWY.5918
+2023-04-04 13:52:01 INFO::Fitting model to feature number 185, PWY.5920
+2023-04-04 13:52:01 INFO::Fitting model to feature number 186, PWY.5941
+2023-04-04 13:52:01 WARNING::Fitting problem for feature 186 returning NA
+2023-04-04 13:52:01 INFO::Fitting model to feature number 187, PWY.5971
+2023-04-04 13:52:01 INFO::Fitting model to feature number 188, PWY.5973
+2023-04-04 13:52:02 INFO::Fitting model to feature number 189, PWY.5989
+2023-04-04 13:52:02 INFO::Fitting model to feature number 190, PWY.6071
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 190 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 191, PWY.6107
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 191 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 192, PWY.6121
+2023-04-04 13:52:02 INFO::Fitting model to feature number 193, PWY.6122
+2023-04-04 13:52:02 INFO::Fitting model to feature number 194, PWY.6123
+2023-04-04 13:52:02 INFO::Fitting model to feature number 195, PWY.6125
+2023-04-04 13:52:02 INFO::Fitting model to feature number 196, PWY.6126
+2023-04-04 13:52:02 INFO::Fitting model to feature number 197, PWY.6147
+2023-04-04 13:52:02 INFO::Fitting model to feature number 198, PWY.6151
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 198 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 199, PWY.6163
+2023-04-04 13:52:02 INFO::Fitting model to feature number 200, PWY.6182
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 200 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 201, PWY.6185
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 201 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 202, PWY.621
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 202 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 203, PWY.6210
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 203 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 204, PWY.6263
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 204 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 205, PWY.6269
+2023-04-04 13:52:02 INFO::Fitting model to feature number 206, PWY.6277
+2023-04-04 13:52:02 INFO::Fitting model to feature number 207, PWY.6282
+2023-04-04 13:52:02 INFO::Fitting model to feature number 208, PWY.6317
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 208 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 209, PWY.6338
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 209 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 210, PWY.6339
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 210 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 211, PWY.6353
+2023-04-04 13:52:02 INFO::Fitting model to feature number 212, PWY.6383
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 212 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 213, PWY.6385
+2023-04-04 13:52:02 INFO::Fitting model to feature number 214, PWY.6386
+2023-04-04 13:52:02 INFO::Fitting model to feature number 215, PWY.6387
+2023-04-04 13:52:02 INFO::Fitting model to feature number 216, PWY.6396
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 216 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 217, PWY.6404
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 217 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 218, PWY.6467
+2023-04-04 13:52:02 INFO::Fitting model to feature number 219, PWY.6470
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 219 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 220, PWY.6471
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 220 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 221, PWY.6478
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 221 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 222, PWY.6505
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 222 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 223, PWY.6507
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 223 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 224, PWY.6519
+2023-04-04 13:52:02 INFO::Fitting model to feature number 225, PWY.6545
+2023-04-04 13:52:02 INFO::Fitting model to feature number 226, PWY.6562
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 226 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 227, PWY.6588
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 227 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 228, PWY.6590
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 228 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 229, PWY.6608
+2023-04-04 13:52:02 INFO::Fitting model to feature number 230, PWY.6609
+2023-04-04 13:52:02 INFO::Fitting model to feature number 231, PWY.6612
+2023-04-04 13:52:02 INFO::Fitting model to feature number 232, PWY.6628
+2023-04-04 13:52:02 INFO::Fitting model to feature number 233, PWY.6630
+2023-04-04 13:52:02 INFO::Fitting model to feature number 234, PWY.6641
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 234 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 235, PWY.6690
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 235 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 236, PWY.6700
+2023-04-04 13:52:02 INFO::Fitting model to feature number 237, PWY.6703
+2023-04-04 13:52:02 INFO::Fitting model to feature number 238, PWY.6708
+2023-04-04 13:52:02 INFO::Fitting model to feature number 239, PWY.6728
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 239 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 240, PWY.6731
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 240 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 241, PWY.6737
+2023-04-04 13:52:02 INFO::Fitting model to feature number 242, PWY.6749
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 242 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 243, PWY.6876
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 243 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 244, PWY.6891
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 244 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 245, PWY.6892
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 245 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 246, PWY.6895
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 246 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 247, PWY.6897
+2023-04-04 13:52:02 INFO::Fitting model to feature number 248, PWY.6901
+2023-04-04 13:52:02 INFO::Fitting model to feature number 249, PWY.6944
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 249 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 250, PWY.6957
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 250 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 251, PWY.6969
+2023-04-04 13:52:02 INFO::Fitting model to feature number 252, PWY.6992
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 252 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 253, PWY.7003
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 253 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 254, PWY.7007
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 254 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 255, PWY.7046
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 255 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 256, PWY.7090
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 256 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 257, PWY.7094
+2023-04-04 13:52:02 INFO::Fitting model to feature number 258, PWY.7097
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 258 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 259, PWY.7098
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 259 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 260, PWY.7111
+2023-04-04 13:52:02 INFO::Fitting model to feature number 261, PWY.7159
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 261 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 262, PWY.7184
+2023-04-04 13:52:02 INFO::Fitting model to feature number 263, PWY.7187
+2023-04-04 13:52:02 INFO::Fitting model to feature number 264, PWY.7196
+2023-04-04 13:52:02 INFO::Fitting model to feature number 265, PWY.7197
+2023-04-04 13:52:02 INFO::Fitting model to feature number 266, PWY.7199
+2023-04-04 13:52:02 WARNING::Fitting problem for feature 266 returning NA
+2023-04-04 13:52:02 INFO::Fitting model to feature number 267, PWY.7200
+2023-04-04 13:52:02 INFO::Fitting model to feature number 268, PWY.7208
+2023-04-04 13:52:03 INFO::Fitting model to feature number 269, PWY.7211
+2023-04-04 13:52:03 INFO::Fitting model to feature number 270, PWY.7219
+2023-04-04 13:52:03 INFO::Fitting model to feature number 271, PWY.722
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 271 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 272, PWY.7220
+2023-04-04 13:52:03 INFO::Fitting model to feature number 273, PWY.7221
+2023-04-04 13:52:03 INFO::Fitting model to feature number 274, PWY.7222
+2023-04-04 13:52:03 INFO::Fitting model to feature number 275, PWY.7228
+2023-04-04 13:52:03 INFO::Fitting model to feature number 276, PWY.7229
+2023-04-04 13:52:03 INFO::Fitting model to feature number 277, PWY.7234
+2023-04-04 13:52:03 INFO::Fitting model to feature number 278, PWY.7237
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 278 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 279, PWY.7242
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 279 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 280, PWY.7254
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 280 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 281, PWY.7255
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 281 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 282, PWY.7295
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 282 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 283, PWY.7315
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 283 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 284, PWY.7323
+2023-04-04 13:52:03 INFO::Fitting model to feature number 285, PWY.7328
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 285 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 286, PWY.7332
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 286 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 287, PWY.7371
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 287 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 288, PWY.7374
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 288 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 289, PWY.7376
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 289 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 290, PWY.7377
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 290 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 291, PWY.7392
+2023-04-04 13:52:03 INFO::Fitting model to feature number 292, PWY.7398
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 292 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 293, PWY.7400
+2023-04-04 13:52:03 INFO::Fitting model to feature number 294, PWY.7431
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 294 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 295, PWY.7456
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 295 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 296, PWY.7527
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 296 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 297, PWY.7539
+2023-04-04 13:52:03 INFO::Fitting model to feature number 298, PWY.7560
+2023-04-04 13:52:03 INFO::Fitting model to feature number 299, PWY.7616
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 299 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 300, PWY.7663
+2023-04-04 13:52:03 INFO::Fitting model to feature number 301, PWY.7664
+2023-04-04 13:52:03 INFO::Fitting model to feature number 302, PWY.841
+2023-04-04 13:52:03 INFO::Fitting model to feature number 303, PWY0.1061
+2023-04-04 13:52:03 INFO::Fitting model to feature number 304, PWY0.1241
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 304 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 305, PWY0.1261
+2023-04-04 13:52:03 INFO::Fitting model to feature number 306, PWY0.1277
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 306 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 307, PWY0.1296
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 307 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 308, PWY0.1297
+2023-04-04 13:52:03 INFO::Fitting model to feature number 309, PWY0.1298
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 309 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 310, PWY0.1319
+2023-04-04 13:52:03 INFO::Fitting model to feature number 311, PWY0.1415
+2023-04-04 13:52:03 INFO::Fitting model to feature number 312, PWY0.1479
+2023-04-04 13:52:03 INFO::Fitting model to feature number 313, PWY0.1533
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 313 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 314, PWY0.1586
+2023-04-04 13:52:03 INFO::Fitting model to feature number 315, PWY0.162
+2023-04-04 13:52:03 INFO::Fitting model to feature number 316, PWY0.166
+2023-04-04 13:52:03 INFO::Fitting model to feature number 317, PWY0.321
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 317 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 318, PWY0.42
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 318 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 319, PWY0.781
+2023-04-04 13:52:03 INFO::Fitting model to feature number 320, PWY0.845
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 320 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 321, PWY0.862
+2023-04-04 13:52:03 INFO::Fitting model to feature number 322, PWY1G.0
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 322 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 323, PWY490.3
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 323 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 324, PWY4FS.7
+2023-04-04 13:52:03 INFO::Fitting model to feature number 325, PWY4FS.8
+2023-04-04 13:52:03 INFO::Fitting model to feature number 326, PWYG.321
+2023-04-04 13:52:03 INFO::Fitting model to feature number 327, PYRIDNUCSAL.PWY
+2023-04-04 13:52:03 INFO::Fitting model to feature number 328, PYRIDNUCSYN.PWY
+2023-04-04 13:52:03 INFO::Fitting model to feature number 329, PYRIDOXSYN.PWY
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 329 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 330, REDCITCYC
+2023-04-04 13:52:03 INFO::Fitting model to feature number 331, RHAMCAT.PWY
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 331 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 332, RIBOSYN2.PWY
+2023-04-04 13:52:03 INFO::Fitting model to feature number 333, RUMP.PWY
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 333 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 334, SALVADEHYPOX.PWY
+2023-04-04 13:52:03 INFO::Fitting model to feature number 335, SER.GLYSYN.PWY
+2023-04-04 13:52:03 INFO::Fitting model to feature number 336, SO4ASSIM.PWY
+2023-04-04 13:52:03 INFO::Fitting model to feature number 337, SUCSYN.PWY
+2023-04-04 13:52:03 WARNING::Fitting problem for feature 337 returning NA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 338, SULFATE.CYS.PWY
+2023-04-04 13:52:03 INFO::Fitting model to feature number 339, TCA
+2023-04-04 13:52:03 INFO::Fitting model to feature number 340, TCA.GLYOX.BYPASS
+2023-04-04 13:52:04 INFO::Fitting model to feature number 341, TEICHOICACID.PWY
+2023-04-04 13:52:04 WARNING::Fitting problem for feature 341 returning NA
+2023-04-04 13:52:04 INFO::Fitting model to feature number 342, THISYN.PWY
+2023-04-04 13:52:04 WARNING::Fitting problem for feature 342 returning NA
+2023-04-04 13:52:04 INFO::Fitting model to feature number 343, THRESYN.PWY
+2023-04-04 13:52:04 INFO::Fitting model to feature number 344, TRNA.CHARGING.PWY
+2023-04-04 13:52:04 INFO::Fitting model to feature number 345, TRPSYN.PWY
+2023-04-04 13:52:04 INFO::Fitting model to feature number 346, TYRFUMCAT.PWY
+2023-04-04 13:52:04 INFO::Fitting model to feature number 347, UBISYN.PWY
+2023-04-04 13:52:04 INFO::Fitting model to feature number 348, UDPNAGSYN.PWY
+2023-04-04 13:52:04 INFO::Fitting model to feature number 349, VALSYN.PWY
+2023-04-04 13:52:04 INFO::Counting total values for each feature
+2023-04-04 13:52:04 WARNING::Deleting existing residuals file: test/maaslin_out/residuals.rds
+2023-04-04 13:52:04 INFO::Writing residuals to file test/maaslin_out/residuals.rds
+2023-04-04 13:52:04 WARNING::Deleting existing fitted file: test/maaslin_out/fitted.rds
+2023-04-04 13:52:04 INFO::Writing fitted values to file test/maaslin_out/fitted.rds
+2023-04-04 13:52:04 WARNING::Deleting existing ranef file: test/maaslin_out/ranef.rds
+2023-04-04 13:52:04 INFO::Writing extracted random effects to file test/maaslin_out/ranef.rds
+2023-04-04 13:52:04 INFO::Writing all results to file (ordered by increasing q-values): test/maaslin_out/all_results.tsv
+2023-04-04 13:52:04 INFO::Writing the significant results (those which are less than or equal to the threshold of 0.250000 ) to file (ordered by increasing q-values): test/maaslin_out/significant_results.tsv
+2023-04-04 13:52:04 INFO::Writing heatmap of significant results to file: test/maaslin_out/heatmap.pdf
+2023-04-04 13:52:04 INFO::Writing association plots (one for each significant association) to output folder: test/maaslin_out
+2023-04-04 13:52:04 INFO::Plotting associations from most to least significant, grouped by metadata
+2023-04-04 13:52:04 INFO::Plotting data for metadata number 1, Group
+2023-04-04 13:52:04 INFO::Creating boxplot for categorical data, Group vs ANAEROFRUCAT.PWY
+2023-04-04 13:52:04 INFO::Creating boxplot for categorical data, Group vs P161.PWY
+2023-04-04 13:52:04 INFO::Creating boxplot for categorical data, Group vs PWY.5695
+2023-04-04 13:52:04 INFO::Creating boxplot for categorical data, Group vs GLYCOLYSIS
+2023-04-04 13:52:04 INFO::Creating boxplot for categorical data, Group vs COBALSYN.PWY
+2023-04-04 13:52:04 INFO::Creating boxplot for categorical data, Group vs LEU.DEG2.PWY
+2023-04-04 13:52:04 INFO::Creating boxplot for categorical data, Group vs PWY.6708
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs PWY4FS.7
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs PWY0.1479
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs PPGPPMET.PWY
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs PWY.5154
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs PWY.5189
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs PWY.5484
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs PWY.6123
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs PWY.7560
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs TYRFUMCAT.PWY
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs COMPLETE.ARO.PWY
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs PANTO.PWY
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs PWY.7211
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs PYRIDNUCSYN.PWY
+2023-04-04 13:52:05 INFO::Creating boxplot for categorical data, Group vs P105.PWY
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs PWY.5104
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs PWY.5188
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs SULFATE.CYS.PWY
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs TCA
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs TRNA.CHARGING.PWY
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs ANAGLYCOLYSIS.PWY
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs GLYCOLYSIS.TCA.GLYOX.BYPASS
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs GLYOXYLATE.BYPASS
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs HSERMETANA.PWY
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs P23.PWY
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs P42.PWY
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs PEPTIDOGLYCANSYN.PWY
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs PWY.181
+2023-04-04 13:52:06 INFO::Creating boxplot for categorical data, Group vs PWY.5101
+2023-04-04 13:52:07 INFO::Creating boxplot for categorical data, Group vs PWY.6125
+2023-04-04 13:52:07 INFO::Creating boxplot for categorical data, Group vs PWY.6147
+2023-04-04 13:52:07 INFO::Creating boxplot for categorical data, Group vs PWY.6385
+2023-04-04 13:52:07 INFO::Creating boxplot for categorical data, Group vs PWY.6467
+2023-04-04 13:52:07 INFO::Creating boxplot for categorical data, Group vs PWY.6969
+2023-04-04 13:52:07 INFO::Creating boxplot for categorical data, Group vs PWY.7111
+2023-04-04 13:52:07 INFO::Creating boxplot for categorical data, Group vs TCA.GLYOX.BYPASS
+2023-04-04 13:52:07 INFO::Creating boxplot for categorical data, Group vs ANAEROFRUCAT.PWY
+2023-04-04 13:52:07 INFO::Creating boxplot for categorical data, Group vs DAPLYSINESYN.PWY
+2023-04-04 13:52:07 INFO::Creating boxplot for categorical data, Group vs PWY.5345

@@ -1,8 +1,3 @@
-# 加载包
-p_list = c("BiocManager", "tidyverse", "ggalluvial", "phyloseq", "reshape2")
-for(p in p_list){if (!requireNamespace(p)){install.packages(p)}
-  library(p, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)}
-
 tax_alluvial <- function(
     otu=NULL,
     map=NULL,
@@ -12,6 +7,10 @@ tax_alluvial <- function(
     j="Phylum", # 使用门水平绘制丰度图表
     Top=10){
     
+    # 加载包
+    p_list = c("BiocManager", "tidyverse", "ggalluvial", "phyloseq", "reshape2")
+    for(p in p_list){if (!requireNamespace(p)){install.packages(p)}
+    library(p, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)}
     # phyloseq导出特征表函数
     vegan_otu = function(physeq){
       OTU= otu_table(physeq)
@@ -94,14 +93,3 @@ tax_alluvial <- function(
     
     return(p)
 }
-
-otutab <- read.table("data/otutab.txt", header=T, row.names=1, sep="\t", comment.char="", stringsAsFactors=F)
-metadata <- read.table("data/metadata.txt", header=T, row.names=1, sep="\t", 
-                       comment.char="", stringsAsFactors=F)
-taxonomy <- read.table("data/taxonomy.txt", header=T, row.names=1, sep="\t", comment.char="", stringsAsFactors=F)
-
-p <- tax_alluvial(otu = otutab, map = metadata, tax = taxonomy, list_group = c("OE", "KO"),
-                  j = "Phylum", Top = 10)
-
-zoom=1.5 # 控制图片缩放比例
-ggsave(paste0("tax_alluvial.jpg"), p, width=89*zoom, height=56*zoom, units="mm")

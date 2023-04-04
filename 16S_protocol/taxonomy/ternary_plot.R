@@ -1,7 +1,3 @@
-p_list = c("BiocManager", "tidyverse", "ggtern", "phyloseq", "reshape2")
-for(p in p_list){if (!requireNamespace(p)){install.packages(p)}
-  library(p, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)}
-
 ternary_plot <- function(
     otu=NULL,
     map=NULL,
@@ -18,6 +14,10 @@ ternary_plot <- function(
       }
       return(as(OTU,"matrix"))
     }
+    
+    p_list = c("BiocManager", "tidyverse", "ggtern", "phyloseq", "reshape2")
+    for(p in p_list){if (!requireNamespace(p)){install.packages(p)}
+      library(p, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)}
     
     # phyloseq导出物种注释函数
     vegan_tax <-  function(physeq){
@@ -86,13 +86,3 @@ ternary_plot <- function(
       theme_bvbw()
     return(p)
 }
-otutab <- read.table("data/otutab.txt", header=T, row.names=1, sep="\t", comment.char="", stringsAsFactors=F)
-metadata <- read.table("data/metadata.txt", header=T, row.names=1, sep="\t", 
-                       comment.char="", stringsAsFactors=F)
-taxonomy <- read.table("data/taxonomy.txt", header=T, row.names=1, sep="\t", comment.char="", stringsAsFactors=F)
-
-p <- ternary_plot(otu = otutab, map = metadata, tax = taxonomy, list_group = c("OE", "KO", "WT"),
-                  j = "Phylum", Top = 10)
-
-zoom=1.5 # 控制图片缩放比例
-ggsave(paste0("tax_alluvial.jpg"), p, width=89*zoom, height=56*zoom, units="mm")

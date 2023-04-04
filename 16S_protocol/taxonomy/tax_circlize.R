@@ -1,125 +1,76 @@
-# Ñù±¾»ò×éµÄÎïÖÖ×é³ÉÏÒÍ¼ Circlize of taxonomy for samples and groups
-#
-# This is the function named 'tax_circlize'
-# which draw circle, and return a circlize object
-#
-#' @title Plotting circlize of taxonomy for groups or samples
-#' @description Input taxonomy composition, and metadata (SampleID and groupID). Then select top N high abundance taxonomy and group other low abundance. When Select samples can draw sample composition by facet groups. If used group can show mean of each group. Finally, return a ggplot2 object.
-#' @param tax_sum composition matrix, like OTU table and rowname is taxonomy, typical output of usearch -sintax_summary;
-#' @param metadata matrix or dataframe, including sampleID and groupID;
-#' @param topN Top N taxonomy to show, default 8, alternative 4, 6, 10 ...;
-#' @param groupID column name for groupID;
-#' @param style group or sample, default group
-#' @param sorted Legend sorted type, default abundance, alternative alphabet
-#' @details
-#' By default, returns top 8 taxonomy and group mean stackplot
-#' The available style include the following:
-#' \itemize{
-#' \item{group: group mean circlize}
-#' \item{sample: each sample circlize}
-#' }
-#' @return ggplot2 object.
-#' @author Contact: Yong-Xin Liu \email{metagenome@@126.com}
-#' @references
-#'
-#' Yong-Xin Liu, Yuan Qin, Tong Chen, Meiping Lu, Xubo Qian, Xiaoxuan Guo & Yang Bai.
-#' A practical guide to amplicon and metagenomic analysis of microbiome data.
-#' Protein Cell, 2020, DOI: \url{https://doi.org/10.1007/s13238-020-00724-8}
-#'
-#' Jingying Zhang, Yong-Xin Liu, Na Zhang, Bin Hu, Tao Jin, Haoran Xu, Yuan Qin, Pengxu Yan, Xiaoning Zhang, Xiaoxuan Guo, Jing Hui, Shouyun Cao, Xin Wang, Chao Wang, Hui Wang, Baoyuan Qu, Guangyi Fan, Lixing Yuan, Ruben Garrido-Oter, Chengcai Chu & Yang Bai.
-#' NRT1.1B is associated with root microbiota composition and nitrogen use in field-grown rice.
-#' Nature Biotechnology, 2019(37), 6:676-684, DOI: \url{https://doi.org/10.1038/s41587-019-0104-4}
-#'
-#' @seealso tax_circlize
-#' @examples
-#' # Taxonomy table in phylum level, rownames is Phylum, colnames is SampleID
-#' data(tax_phylum)
-#' # metadata, include SampleID, Group and Site
-#' data(metadata)
-#' # Set 4 parameters: set top 5 taxonomy, group by "Group"
-#' tax_circlize(tax_sum = tax_phylum, metadata, topN = 5, groupID = "Group")
-#' @export
 tax_circlize <- function(tax_sum, metadata, topN = 5, groupID = "Group") {
     
-    # ÒÀÀµ¹ØÏµ¼ì²âÓë°²×°
+    # ??ï¿½ï¿½??Ïµ?????ë°²×°
     p_list = c("ggplot2", "reshape2", "circlize")
     for(p in p_list){
         if (!requireNamespace(p)){install.packages(p)}
         suppressPackageStartupMessages(library(p, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE))
     }
     
-    # ²âÊÔÄ¬ÈÏ²ÎÊý
+    # ????Ä¬?Ï²???
     # library(amplicon)
     # tax_sum = tax_phylum
     # topN = 5
     # groupID = "Group"
     
-    # ½»²æÉ¸Ñ¡
+    # ????É¸Ñ¡
     idx = rownames(metadata) %in% colnames(tax_sum)
     metadata = metadata[idx,,drop=F]
     tax_sum = tax_sum[, rownames(metadata)]
     
-    # ÌáÈ¡ÑùÆ·×éÐÅÏ¢,Ä¬ÈÏÎªgroup¿ÉÖ¸¶¨
+    # ??È¡??Æ·????Ï¢,Ä¬??Îªgroup??Ö¸??
     sampFile = as.data.frame(metadata[, groupID],row.names = row.names(metadata))
     colnames(sampFile)[1] = "group"
     
-    #----°´·á¶È½µÐòÅÅÐò#----
+    #----?????È½???????#----
     mean_sort = as.data.frame(tax_sum[(order(-rowSums(tax_sum))), ])
-    # É¸Ñ¡Ç°NÀà£¬ÆäËü¹éÎªOther£¬¿ÉÉèÖÃ²»Í¬×éÊý
+    # É¸Ñ¡Ç°N?à£¬??????ÎªOther???????Ã²?Í¬????
     other = colSums(mean_sort[topN:dim(mean_sort)[1], ])
     mean_sort = mean_sort[1:(topN - 1), ]
     mean_sort = rbind(mean_sort,other)
     rownames(mean_sort)[topN] = c("Other")
-    # ±£´æ±äÁ¿±¸·Ý£¬²¢Êä³öÖÁÎÄ¼þ
+    # ??????ï¿½ï¿½???Ý£??????????Ä¼?
     merge_tax=mean_sort
     
-    #----°´×éºÏ²¢Çó¾ùÖµ#----
+    #----?????Ï²?????Öµ#----
     
-    # ×ªÖÃÑùÆ·ÃûÌí¼Ó×éÃû£¬²¢È¥³ý¶àÓàµÄÁ½¸öÑùÆ·ÁÐ
+    # ×ª????Æ·??????????????È¥????????ï¿½ï¿½????Æ·??
     mat_t = t(merge_tax)
     mat_t2 = merge(sampFile, mat_t, by="row.names")
     mat_t2 = mat_t2[,c(-1)]
     
-    # °´×éÇó¾ùÖµ£¬×ªÖÃ£¬ÔÙÌí¼ÓÁÐÃû
+    # ????????Öµ??×ª?Ã£???????????
     mat_mean = aggregate(mat_t2[,-1], by=mat_t2[1], FUN=mean) # mean
     # df = do.call(rbind, mat_mean)[-1,]
     df = t(mat_mean[,-1])
     geno = mat_mean$group
     colnames(df) = mat_mean$group
     
-    #----Ä¬ÈÏ²ÎÊý»æÍ¼-ÑÕÉ«Ëæ»ú#----
+    #----Ä¬?Ï²?????Í¼-??É«????#----
     
-    # ÉèÖÃÍ¼Æ¬ÎÄ¼þÃû¡¢³¤¿íºÍ×ÖÌå´óÐ¡
+    # ????Í¼Æ¬?Ä¼?????????????????Ð¡
     pdf(file="circlize.pdf", width=89/25.4, height=89/25.4, pointsize=8)
-    # ÉÏ·½»æÍ¼ºÍÍ¼Àý´úÂë
+    # ?Ï·???Í¼??Í¼??????
     chordDiagram(df)
-    # »æÍ¼½áÊøºóÐ´ÈëÎÄ¼þ
+    # ??Í¼??????Ð´???Ä¼?
     dev.off()
     
-    #----Ö¸¶¨ÑÕÉ«»æÍ¼+Í¼Àý#----
-    # ÑÕÉ«Éè¶¨
+    #----Ö¸????É«??Í¼+Í¼??#----
+    # ??É«?è¶¨
     library(RColorBrewer)
     grid.col = NULL
-    # ·ÖÀàÑ§ÑÕÉ«£¬×î¶à12ÖÖ
+    # ????Ñ§??É«??????12??
     grid.col[rownames(df)] = brewer.pal(dim(df)[1], "Set1")
-    # ¶¨Òå·Ö×éÑÕÉ«
+    # ??????????É«
     grid.col[colnames(df)] = brewer.pal(dim(df)[2], "Accent")
     
-    pdf(file="circlize_legend.pdf", width=183/25.4, height=89/25.4, pointsize=8)
-    # ÉÏ·½»æÍ¼ºÍÍ¼Àý´úÂë
+    png(file="circlize_legend.pdf", width = 480, height = 480, pointsize=12)
+    # ?Ï·???Í¼??Í¼??????
     chordDiagram(df, directional = TRUE,diffHeight = 0.03, grid.col = grid.col, transparency = 0.5)
-    # Ìí¼ÓÐÐ-ÎïÖÖÍ¼Àý
+    # ??????-????Í¼??
     legend("left",pch=20,legend=rownames(df),col=grid.col[rownames(df)],bty="n",cex=1,pt.cex=3,border="black")
-    # Ìí¼ÓÁÐ-·Ö×éÍ¼Àý
+    # ??????-????Í¼??
     legend("right",pch=20,legend=colnames(df),col=grid.col[colnames(df)],bty="n",cex=1,pt.cex=3,border="black")
-    # »æÍ¼½áÊøºóÐ´ÈëÎÄ¼þ
+    # ??Í¼??????Ð´???Ä¼?
     dev.off()
 }
-# Êä³ö½á¹û´æÔÚAIÖÐ±à¼­È±Ê§×ÖÌåÎÊÌâ£¿AdobePiStd
-
-metadata=read.table("data/metadata.txt", header=T, row.names=1, sep="\t", 
-                    comment.char="", stringsAsFactors=F)
-
-load("data/tax_phylum.rda")
-
-tax_circlize(tax_sum=tax_phylum, metadata, topN=5, groupID="Group")

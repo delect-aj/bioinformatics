@@ -1,45 +1,3 @@
-# 样本或组的物种组成堆叠柱状图 Stackplot of taxonomy for samples and groups
-#
-# This is the function named 'tax_stackplot'
-# which draw stack plot, and return a ggplot2 object
-#
-#' @title Plotting stackplot of taxonomy for groups or samples
-#' @description Input taxonomy composition, and metadata (SampleID and groupID). Then select top N high abundance taxonomy and group other low abundance. When Select samples can draw sample composition by facet groups. If used group can show mean of each group. Finally, return a ggplot2 object.
-#' @param tax_sum composition matrix, like OTU table and rowname is taxonomy, typical output of usearch -sintax_summary;
-#' @param metadata matrix or dataframe, including sampleID and groupID;
-#' @param topN Top N taxonomy to show, default 8, alternative 4, 6, 10 ...;
-#' @param groupID column name for groupID;
-#' @param style group or sample, default group
-#' @param sorted Legend sorted type, default abundance, alternative alphabet
-#' @param subgroup Group samples with supplied subgroup to compute avrage values.
-#' @details
-#' By default, returns top 8 taxonomy and group mean stackplot
-#' The available style include the following:
-#' \itemize{
-#' \item{group: group mean stackplot}
-#' \item{sample: each sample stackplot and facet by group}
-#' }
-#' @return ggplot2 object.
-#' @author Contact: Yong-Xin Liu \email{metagenome@@126.com}
-#' @references
-#'
-#' Yong-Xin Liu, Yuan Qin, Tong Chen, Meiping Lu, Xubo Qian, Xiaoxuan Guo & Yang Bai.
-#' A practical guide to amplicon and metagenomic analysis of microbiome data.
-#' Protein Cell, 2020(41), 1-16, DOI: \url{https://doi.org/10.1007/s13238-020-00724-8}
-#'
-#' @seealso tax_stackplot
-#' @examples
-#' # Taxonomy table in phylum level, rownames is Phylum, colnames is SampleID
-#' data(tax_phylum)
-#' # metadata, include SampleID, Group and Site
-#' data(metadata)
-#' # tax_sum and metadata as input, default include top 8 taxonomy, groupID is Group, show group mean and sorted by abundance
-#' tax_stackplot(tax_sum = tax_phylum, metadata)
-#' # Set top10 taxonomy, group by "Site", group mean, and sort by abundance
-#' tax_stackplot(tax_sum = tax_phylum, metadata, topN = 10, groupID = "Site", style = "group", sorted = "abundance")
-#' # Set top 10 taxonomy, group by "Group", and sample composition sorted by alphabet
-#' tax_stackplot(tax_sum = tax_phylum, metadata, topN = 10, groupID = "Group", style = "sample", sorted = "alphabet")
-#' @export
 tax_stackplot <-
   function(tax_sum,
            metadata,
@@ -198,27 +156,3 @@ tax_stackplot <-
       p
     }
   }
-
-
-library(RColorBrewer)
-load("data/tax_phylum.rda")
-
-metadata=read.table("data/metadata.txt", header=T, row.names=1, sep="\t", 
-                    comment.char="", stringsAsFactors=F)
-
-
-# 门水平物种组成表和元数据作为输入，分组列名为Group，默认显示前8个分类，按丰度排序
-p=tax_stackplot(tax_phylum, metadata, groupID="Group")
-zoom=1.2 # 控制图片缩放比例
-# 输出图片
-ggsave(paste0("p1.stackplot.group.jpg"), p, width=89*zoom, height=56*zoom, units="mm")
-
-
-# topN指定图例数量，style指定类型为样本/分组，排序可选字母
-p=tax_stackplot(tax_phylum, metadata, groupID="Group", topN=10, 
-                style="sample", sorted="alphabet") +
-  scale_fill_brewer(palette="Set3")
-# 保存图片
-zoom=1.5 # 控制图片缩放比例
-ggsave(paste0("p2.stackplot.sample.jpg"), p, width=89*zoom, height=56*zoom, units="mm")
-

@@ -2,6 +2,7 @@ library(vegan)
 metadata <- read.table("data/metadata.txt", header=T, row.names=1, sep="\t", 
                        comment.char="", stringsAsFactors=F)
 
+
 # 主坐标轴分析，可选距离矩阵bray_curtis、unifrac、unifrac_binary、jaccard、manhatten、euclidean
 # 设置距离矩阵类似，常用bray_curtis或unifrac
 distance_type = "bray_curtis"

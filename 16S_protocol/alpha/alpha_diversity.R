@@ -1,43 +1,5 @@
-# 绘制alpha多样性箱线图并添加统计分组 Alpha boxplot & ANOVA+Tukey/LSD test
-#
-# This is the first function named 'alpha_boxplot'
-# which draw box plot with alpha and metadata, and return a ggplot2 object
-
-#' @title Plotting alpha diversity boxplot for each group with ANOVA statistics
-#' @description Input alpha index and metadata, and manual set alpha index and metadata column name
-#' ANOVA+TukeyHSD/agricolae::LSD.test calculate p-value, and dplyr summary each group max for p-value groups position.
-#' ggplot2 show boxplot, jitter and stat groups.
-#' @param alpha_div alpha diversity matrix, typical output of usearch(-alpha_div)/QIIME/vegan
-#' rowname is sample ID, colname is index of alpha diversity;
-#' @param index index type of alpha diversity;
-#' @param metadata matrix or data frame, including sample ID and group ID;
-#' @param groupID column name for group ID.
-#' @details
-#' By default, returns richness diversity index
-#' The available diversity indices include the following:
-#' \itemize{
-#' \item{most used indices: richness, simpson, shannon_2}
-#' \item{other used indices: berger_parker, buzas_gibson, dominance, equitability, jost, jost1, reads, robbins, simpson, shannon_2, shannon_10}
-#' }
-#' @return ggplot2 object.
-#' @author Contact: Yong-Xin Liu \email{yxliu@@genetics.ac.cn}
-#' @references
-#'
-#' Yong-Xin Liu, Yuan Qin, Tong Chen, Meiping Lu, Xubo Qian, Xiaoxuan Guo & Yang Bai.
-#' A practical guide to amplicon and metagenomic analysis of microbiome data.
-#' Protein Cell, 2020(41), 1-16, DOI: \url{https://doi.org/10.1007/s13238-020-00724-8}
-#'
-#' @seealso alpha_barplot
-#' @examples
-#' # Input alpha index (alpha_div) and metadata, select richness (index type) and Group (catagory)
-#' alpha_boxplot(alpha_div, metadata, "richness", "Group")
-#' # Select shannon_2 (index type) and Site (catagory)
-#' alpha_boxplot(alpha_div = alpha_div, metadata = metadata, index = "shannon_2", groupID = "Site")
-#' @export
-
 alpha_boxplot <- function(alpha_div, metadata, index = "richness", groupID = "Group",
-                          outlier = TRUE
-) {
+                          outlier = TRUE) {
   # 依赖关系检测与安装
   p_list = c("ggplot2", "dplyr", "multcompView") # "agricolae"
   for(p in p_list){
@@ -59,7 +21,7 @@ alpha_boxplot <- function(alpha_div, metadata, index = "richness", groupID = "Gr
   alpha_div = alpha_div[rownames(metadata),]
   
   # 提取样品组信息,默认为group可指定
-  sampFile = as.data.frame(metadata[, groupID],row.names = row.names(metadata))
+  sampFile = as.data.frame(metadata[, groupID], row.names = row.names(metadata))
   # colnames(sampFile)[1] = "group"
   
   # 合并alpha_div和metadata
@@ -136,8 +98,7 @@ alpha_boxplot <- function(alpha_div, metadata, index = "richness", groupID = "Gr
                    width=0.5, fill="transparent") +
       labs(x="Groups", y=paste(index, "index"), color=groupID) + theme_classic() +
       geom_text(data=df, aes(x=group, y=y, color=group, label=stat)) +
-      geom_jitter(position=position_jitter(0.17), size=1, alpha=0.7)+
-      theme(text=element_text(family="sans", size=10))
+      geom_jitter(position=position_jitter(0.17), size=1, alpha=0.7)
     p
   } else{
     # 绘图 plotting
@@ -149,25 +110,8 @@ alpha_boxplot <- function(alpha_div, metadata, index = "richness", groupID = "Gr
                    width=0.5, fill="transparent") +
       labs(x="Groups", y=paste(index, "index"), color=groupID) + theme_classic() +
       geom_text(data=df, aes(x=group, y=y, color=group, label=stat)) +
-      geom_jitter(position=position_jitter(0.17), size=1, alpha=0.7)+
-      theme(text=element_text(family="sans", size=7))
+      geom_jitter(position=position_jitter(0.17), size=1, alpha=0.7)
     p
   }
-  
-  
 }
-
-load("data/alpha_div.rda")
-metadata=read.table("data/metadata.txt", header=T, row.names=1, sep="\t", 
-                    comment.char="", stringsAsFactors=F)
-
-colnames(alpha_div) = capitalize(colnames(alpha_div))
-colnames(alpha_div)
-#> [1] "Richness"   "Chao1"      "ACE"        "Shannon"    "Simpson"   
-#> [6] "Invsimpson"
-# 选择指数"Richness","Chao1","ACE","Shannon","Simpson","Invsimpson"  
-alpha_index = "richness"
-
-# Plotting alpha diversity Richness boxplot and stat
-p = alpha_boxplot(alpha_div, index = alpha_index, metadata, groupID = "Group")
                   
